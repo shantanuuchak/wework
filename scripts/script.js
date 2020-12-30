@@ -253,9 +253,3 @@
             analytics.load(window.clientSideInjectionVars.segmentKey);
         }
 }();
-
-
-
-
-
-

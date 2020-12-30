@@ -1,292 +1,24 @@
 <!DOCTYPE html>
-<html lang="en" class="page-home" text-direction="ltr">
+<html lang="en" class="page-home">
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta httpequiv="content-type" content="text/html">
 
+  <title>WeWork | Office Space and Workspace Solutions</title>
 
-  <title id="page-title">WeWork | Office Space and Workspace Solutions</title>
-
-  <link rel="preload" href="./resources/apercu.css" as="style">
+  <!-- Fonts -->
   <link rel="stylesheet" href="./resources/apercu.css">
-
   <link rel="stylesheet" href="./resources/apercu_mono.css">
 
+  <!-- Main CSS Fils -->
   <link rel="stylesheet" href="./resources/vendor.css">
-
   <link rel="stylesheet" href="./resources/main-styles.css">
 
-
-  <script>
-    (function () {
-
-      function getCountryCode(cb) {
-
-        var xhr = new XMLHttpRequest();
-
-        function handleStateChange() {
-          if (xhr.readyState == XMLHttpRequest.DONE) {
-            cb(xhr.getResponseHeader('GeoIP-Country-Code') || 'US');
-          }
-        }
-
-        xhr.open('HEAD', '/');
-        xhr.onreadystatechange = handleStateChange;
-        xhr.send();
-      }
-
-      function getCookieValue(name) {
-        var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
-        if (match) {
-          return match[2];
-        }
-        return null;
-      }
-
-      var userId = getCookieValue('__we_bucket_id') || 'dev';
-
-      var requestId = getCookieValue('__we_request_id') || 'dev_request';
-
-      window.analyticsGlobals = window.analyticsGlobals || {};
-      window.analyticsGlobals.userId = userId;
-      window.analyticsGlobals.requestId = requestId;
-      window.analyticsGlobals.appVersion = "7.0.0";
-
-      var base64SegmentKey = window.btoa("h9Z4ewnWf83L60TdwjeJcDW8mFBKnbZO:");
-
-      var countryCode = 'US';
-
-      var makeSegmentTrackCall = function (data) {
-        var payload = data || {};
-
-        var url = 'https://api.segment.io/v1/track';
-
-        payload.timestamp = (new Date()).toISOString();
-
-        payload.integrations = {
-          Heap: true,
-        }
-
-        if (payload.properties) {
-          payload.properties.app_version = "7.0.0";
-          payload.properties.app_name = "vanilla";
-          payload.properties.path = window.location.pathname;
-          payload.properties.url = window.location.href;
-          payload.properties.experiments =
-            "&#x3D;control; select1_2&#x3D;2; buildings_near_me&#x3D;2; buttonColor&#x3D;2; dynamicProduct&#x3D;2; enterprisePageUpdates&#x3D;2; hidePricingSection&#x3D;2; howTomorrowWorks&#x3D;2; interactiveFloorplan&#x3D;control; marketHeader&#x3D;2; marketPageVsOfficeSpacePage&#x3D;2; marketing_assets&#x3D;2; newCheckoutWeMembership&#x3D;2; newCheckoutFlowMaintenance&#x3D;1; newSearchCards&#x3D;1; onDemandLink&#x3D;2; productDetailsPages&#x3D;1; saveButton&#x3D;2; searchPage&#x3D;2; self_serve&#x3D;2; siloPageLinking&#x3D;2; stickerShock&#x3D;control; vanillaSelfServe&#x3D;2; virtual_tour_engagement_v2&#x3D;1";
-          payload.properties.request_id = requestId;
-          payload.properties.device_type = "Desktop";
-          payload.properties.country_code = countryCode;
-        }
-
-        payload.userId = userId;
-
-        var xhr = new XMLHttpRequest();
-
-        function handleStateChange() {
-          if (xhr.readyState == XMLHttpRequest.DONE) {
-            if (xhr.status === 200) {
-              // success
-            } else {
-              // failure
-            }
-          }
-        }
-
-        xhr.open('POST', url);
-        xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-        xhr.setRequestHeader('Authorization', 'Basic ' + base64SegmentKey);
-        xhr.onreadystatechange = handleStateChange;
-        xhr.send(JSON.stringify(payload));
-      }
-
-      var perfTiming = window.performance.timing;
-
-      function makeTimingCalls(country) {
-        countryCode = country;
-
-        makeSegmentTrackCall({
-          event: 'Timing Early',
-          properties: {
-            timingAppcacheTime: perfTiming.domainLookupStart - perfTiming.fetchStart,
-            timingConnectEnd: perfTiming.connectEnd,
-            timingConnectStart: perfTiming.connectStart,
-            timingConnectTime: perfTiming.connectEnd - perfTiming.connectStart,
-            timingDomainLookupEnd: perfTiming.domainLookupEnd,
-            timingDomainLookupStart: perfTiming.domainLookupStart,
-            timingFetchStart: perfTiming.fetchStart,
-            timingLookupDomainTime: perfTiming.domainLookupEnd - perfTiming.domainLookupStart,
-            timingNavigationStart: perfTiming.navigationStart,
-            timingReadyStart: perfTiming.fetchStart - perfTiming.navigationStart,
-            timingRedirectEnd: perfTiming.redirectEnd,
-            timingRedirectStart: perfTiming.redirectStart,
-            timingRedirectTime: perfTiming.redirectEnd - perfTiming.redirectStart,
-            timingRequestStart: perfTiming.requestStart,
-            timingRequestTime: perfTiming.responseEnd - perfTiming.requestStart,
-            timingResponseEnd: perfTiming.responseEnd,
-            timingResponseStart: perfTiming.responseStart,
-            timingSecureConnectionStart: perfTiming.secureConnectionStart,
-          }
-        })
-
-        function handleDocumentLoading() {
-          makeSegmentTrackCall({
-            event: 'Timing Early',
-            properties: {
-              timingDomLoading: perfTiming.domLoading,
-            }
-          });
-        }
-
-        function handleDocumentComplete() {
-          var domReadyTime = perfTiming.domComplete - perfTiming.domInteractive;
-          makeSegmentTrackCall({
-            event: 'Timing Early',
-            properties: {
-              timingDomReadyTime: domReadyTime,
-              timingDomComplete: perfTiming.domComplete,
-            }
-          });
-        }
-
-        function handleDocumentInteractive() {
-          var initDomTreeTime = perfTiming.domInteractive - perfTiming.responseEnd;
-          makeSegmentTrackCall({
-            event: 'Timing Early',
-            properties: {
-              timingDomInteractive: perfTiming.domInteractive,
-              timingInitDomTree: initDomTreeTime,
-            }
-          });
-        }
-
-        function handleLoadEvent() {
-          makeSegmentTrackCall({
-            event: 'Timing Early',
-            properties: {
-              timingLoadEventStart: perfTiming.loadEventStart,
-            }
-          });
-        }
-
-        function handleLoadEventEnd() {
-          var loadTime = perfTiming.loadEventEnd - perfTiming.fetchStart;
-          var loadEventTime = perfTiming.loadEventEnd - perfTiming.loadEventStart;
-          makeSegmentTrackCall({
-            event: 'Timing Early',
-            properties: {
-              timingLoadTime: loadTime,
-              timingLoadEventTime: loadEventTime,
-              timingLoadEventEnd: perfTiming.loadEventEnd,
-            }
-          });
-        }
-
-        function handleDOMContentLoaded() {
-          makeSegmentTrackCall({
-            event: 'Timing Early',
-            properties: {
-              timingDomContentLoadedEventStart: perfTiming.domContentLoadedEventStart,
-            }
-          });
-          setTimeout(function () {
-            makeSegmentTrackCall({
-              event: 'Timing Early',
-              properties: {
-                timingDomContentLoadedEventEnd: perfTiming.domContentLoadedEventEnd,
-              }
-            });
-          })
-        }
-
-        function handleUnloadEvent() {
-          makeSegmentTrackCall({
-            event: 'Timing Early',
-            properties: {
-              timingUnloadEventStart: perfTiming.unloadEventStart,
-            }
-          });
-        }
-
-        function handleUnloadEventEnd() {
-          makeSegmentTrackCall({
-            event: 'Timing Early',
-            properties: {
-              timingUnloadEventEnd: perfTiming.unloadEventEnd,
-              timingUnloadEventTime: perfTiming.unloadEventEnd - perfTiming.unloadEventStart,
-            }
-          });
-        }
-      }
-      getCountryCode(makeTimingCalls);
-
-
-    })();
-  </script>
-
-  <script type="text/javascript">
-    ! function () {
-      var analytics = window.analytics = window.analytics || [];
-      if (!analytics.initialize)
-        if (analytics.invoked) window.console && console.error && console.error("Segment snippet included twice.");
-        else {
-          analytics.invoked = !0;
-          analytics.methods = ["trackSubmit", "trackClick", "trackLink", "trackForm", "pageview", "identify", "reset",
-            "group", "track", "ready", "alias", "debug", "page", "once", "off", "on"
-          ];
-          analytics.factory = function (t) {
-            return function () {
-              var e = Array.prototype.slice.call(arguments);
-              e.unshift(t);
-              analytics.push(e);
-              return analytics
-            }
-          };
-          for (var t = 0; t < analytics.methods.length; t++) {
-            var e = analytics.methods[t];
-            analytics[e] = analytics.factory(e)
-          }
-          analytics.load = function (t, e) {
-            var n = document.createElement("script");
-            n.type = "text/javascript";
-            n.async = !0;
-            n.src = "https://cdn.segment.com/analytics.js/v1/" + t + "/analytics.min.js";
-            var a = document.getElementsByTagName("script")[0];
-            a.parentNode.insertBefore(n, a);
-            analytics._loadOptions = e
-          };
-          analytics.SNIPPET_VERSION = "4.1.0";
-          analytics.load(window.clientSideInjectionVars.segmentKey);
-        }
-    }();
-  </script>
-
-  <script src="./resources/index.js.download" defer=""></script>
-  <script src="./resources/home.26e03b804525c16b943b.js.download" defer="">
-  </script>
-
-
-  <script charset="utf-8"
-    src="./resources/vendors_access-memberships-main_acquisition-main_all_access-main_awareness-main_brokers-main_buildin_2b76c9bf.9b8f73af91b6877f72cd.chunk.js.download">
-  </script>
-
-  <script charset="utf-8"
-    src="./resources/vendors_all_access-main_building-main_enterprise-main_home-main_host-event-main_mission-main_partner_05687d31.d1c18319952462d97566.chunk.js.download">
-  </script>
-
-  <script charset="utf-8" src="./resources/vendors_checkout-main_home-main.c6950e7253cf067a41c6.chunk.js.download">
-  </script>
-
-  <script charset="utf-8"
-    src="./resources/access-memberships-main_acquisition-main_all_access-main_awareness-main_brokers-main_coming-soon-mai_8ed1ce08.7fc1d2dc5c2920be425a.chunk.js.download">
-  </script>
-
-  <script charset="utf-8" src="./resources/home-main.dc56dd9d2d0e8a388609.chunk.js.download">
-  </script>
-
-  <script async="" src="./resources/modules.5d1cad31427a09b055ed.js.download" charset="utf-8"></script>
+  <!-- Scripts -->
+  <script src="scripts/script.js"></script>
+  <script src="scripts/chunk.js"></script>
 
 </head>
 
@@ -816,8 +548,8 @@
                 style="transition: transform 0ms cubic-bezier(0.165, 0.84, 0.44, 1) 0s; width: 5576px; transform: translate3d(0px, 0px, 0px);">
                 <li class="glide__slide glide__slide--active" style="width: 1096px; margin-right: 12px;">
                   <div class="ray-image ray-image--16by9">
-                    <img sizes="(min-width: 1195px) 1096px, (min-width: 600px) 90vw, 90vw"
-                      src="./images/image-one.jpg" alt="homepage hero 1">
+                    <img sizes="(min-width: 1195px) 1096px, (min-width: 600px) 90vw, 90vw" src="./images/image-one.jpg"
+                      alt="homepage hero 1">
                   </div>
 
                 </li>
@@ -839,8 +571,7 @@
                 <li class="glide__slide" style="width: 1096px; margin-left: 12px; margin-right: 12px;">
                   <div class="ray-image ray-image--16by9">
                     <img sizes="(min-width: 1195px) 1096px, (min-width: 600px) 90vw, 90vw" alt="homepage hero 4"
-                      src="./images/image-four.jpg"
-                      class="loaded">
+                      src="./images/image-four.jpg" class="loaded">
                   </div>
 
                 </li>
